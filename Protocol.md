@@ -135,7 +135,7 @@ Project_Name
 
 The header file provides a description of the default fields included in the data file.
 
-### Error response:
+### Error response
 
 {  
   "status": {  
