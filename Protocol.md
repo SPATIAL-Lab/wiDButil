@@ -1,4 +1,4 @@
-# Protocol for Spatial_WI Database API
+# Protocol for waterisotopes Database API
 
 Open to Public
 
