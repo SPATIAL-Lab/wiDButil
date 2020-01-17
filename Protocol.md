@@ -1,10 +1,11 @@
-Protocol for Spatial_WI Database API
+# Protocol for Spatial_WI Database API
 
 Open to Public
 
 Base URL: http://wateriso.utah.edu/api/v1
 
-***********************************************************************************************************
+## Request sites
+
 [GET]	/sites.php?option1=sth&option2=sth&option3=sth&return=sth
 
 default response:
