@@ -7,9 +7,10 @@ http://wateriso.utah.edu/api/v1
 
 ## Request sites
 
-*Usage: [GET].../sites.php?option1=sth&option2=sth&option3=sth&return=sth*
+*Usage:*  
+[GET].../sites.php?option1=sth&option2=sth&option3=sth&return=sth
 
-### Default response (JSON):  
+### Default response (JSON)  
 
 {  
   "sites":  [  
@@ -46,7 +47,7 @@ http://wateriso.utah.edu/api/v1
   ]  
 }  
 
-### Error response:  
+### Error response  
 
 {   
   "status": {  
@@ -54,11 +55,12 @@ http://wateriso.utah.edu/api/v1
   }  
 }  
 
-### Input options:
+### Input options  
 
-*Usage: minlat=-10&maxlat=50.6&countries=US,CA*                                                                    
+*Usage:*  
+...minLat=-10&maxLat=50.6&countries=US,CA  
 
-|name           |Description                              |value                                                     |  
+|Name           |Description                              |Value                                                     |  
 |---------------|-----------------------------------------|----------------------------------------------------------|  
 |minLat         |a min value of Latitude                  |DOUBLE  -90 to 90, South is negative                      |
 |maxLat         |a max value of Latitude                  |DOUBLE  -90 to 90, South is negative                      |
@@ -73,9 +75,10 @@ http://wateriso.utah.edu/api/v1
 |types          |one or multiple types of samples         |STRING  comma separated (e.g. types=Lake,Precipitation)   |
 |projects       |one or multiple project ids              |STRING  comma separated (e.g. projectIds=00113,00161)     |
 
-### Return options:
+### Return options
 
-*Usage: return=sites,latlong,types*
+*Usage:*  
+...return=sites,latlong,types
 
 Users can choose what fields to return from the options below. Default return includes all of the return options.
 
@@ -85,9 +88,10 @@ sites   latlong   elevation   countries   states    types   dates   projects
 
 ## Request data
 
-*Usage: [GET]...download.php?option1=sth&option2=sth&option3=sth&return=sth*
+*Usage:*  
+[GET]...download.php?option1=sth&option2=sth&option3=sth&return=sth  
 
-### Default response (zip):  
+### Default response (zip)  
 
 This api will return a .zip file containing a data file, a project file and description file.
 
@@ -140,9 +144,10 @@ If there is an error, response will be as follows:
             }
 }
 
-### Input options:
+### Input options
 
-*Usage: minlat=-10&maxlat=50.6&countries=US,CA*                                                                    
+*Usage:*  
+...minLat=-10&maxLat=50.6&countries=US,CA  
 
 |name           |Description                              |value                                                     |  
 |---------------|-----------------------------------------|----------------------------------------------------------|  
@@ -159,9 +164,10 @@ If there is an error, response will be as follows:
 |types          |one or multiple types of samples         |STRING  comma separated (e.g. types=Lake,Precipitation)   |
 |projects       |one or multiple project ids              |STRING  comma separated (e.g. projectIds=00113,00161)     |
 
-### Return options:
+### Return options
 
-*Usage: return=sites,latlong,types*
+*Usage:*  
+...return=sites,latlong,types  
 
 Users can choose a subset of fields to return in the data file by listing field names as arguments. All arguments are comma separated. Default return includes all of the return options. Project_ID is always returned.
 
