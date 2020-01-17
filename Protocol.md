@@ -20,7 +20,7 @@ http://wateriso.utah.edu/api/v1
       "Longitude": DOUBLE  
     },  
     ...  
-  ], 
+  ],  
   "latlong": {  
     "minLat": DOUBLE,  
     "maxLat": DOUBLE,  
