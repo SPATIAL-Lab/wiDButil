@@ -3,12 +3,12 @@
 Open to Public
 
 *Base URL:*  
-http://wateriso.utah.edu/api/v1
+*http://wateriso.utah.edu/api/v1*
 
 ## Request sites
 
 *Usage:*  
-[GET].../sites.php?option1=sth&option2=sth&option3=sth&return=sth
+*[GET].../sites.php?option1=sth&option2=sth&option3=sth&return=sth*
 
 ### Default response (JSON)  
 
@@ -58,7 +58,7 @@ http://wateriso.utah.edu/api/v1
 ### Input options  
 
 *Usage:*  
-...minLat=-10&maxLat=50.6&countries=US,CA  
+*...minLat=-10&maxLat=50.6&countries=US,CA*  
 
 |Name           |Description                              |Value                                                     |  
 |---------------|-----------------------------------------|----------------------------------------------------------|  
@@ -78,7 +78,7 @@ http://wateriso.utah.edu/api/v1
 ### Return options
 
 *Usage:*  
-...return=sites,latlong,types
+*...return=sites,latlong,types*
 
 Users can choose what fields to return from the options below. Default return includes all of the return options.
 
@@ -89,7 +89,7 @@ sites   latlong   elevation   countries   states    types   dates   projects
 ## Request data
 
 *Usage:*  
-[GET]...download.php?option1=sth&option2=sth&option3=sth&return=sth  
+*[GET]...download.php?option1=sth&option2=sth&option3=sth&return=sth*  
 
 ### Default response (zip)  
 
@@ -147,7 +147,7 @@ If there is an error, response will be as follows:
 ### Input options
 
 *Usage:*  
-...minLat=-10&maxLat=50.6&countries=US,CA  
+*...minLat=-10&maxLat=50.6&countries=US,CA*  
 
 |name           |Description                              |value                                                     |  
 |---------------|-----------------------------------------|----------------------------------------------------------|  
@@ -167,7 +167,7 @@ If there is an error, response will be as follows:
 ### Return options
 
 *Usage:*  
-...return=sites,latlong,types  
+*...return=sites,latlong,types*  
 
 Users can choose a subset of fields to return in the data file by listing field names as arguments. All arguments are comma separated. Default return includes all of the return options. Project_ID is always returned.
 
