@@ -133,16 +133,15 @@ Project_Name
 
 #### Description file (xlsx)
 
-The header file provides a description of the default fields included in the tables of data file.
+The header file provides a description of the default fields included in the data file.
 
 ### Error response:
 
-If there is an error, response will be as follows:
-{
-  "status": {
-              "Message" : STRING
-            }
-}
+{  
+  "status": {  
+    "Message" : STRING  
+  }  
+}  
 
 ### Input options
 
