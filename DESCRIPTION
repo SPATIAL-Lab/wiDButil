@@ -1,4 +1,4 @@
-Package: wiDB_utilities
+Package: wiDButil
 Title: Query And Retrieve Data From The Waterisotopes Database
 Version: 0.1
 Authors@R: person("Gabriel", "Bowen", email = "gabe.bowen@utah.edu",
