@@ -1,0 +1,11 @@
+Package: wiDB_utilities
+Title: Query And Retrieve Data From The Waterisotopes Database
+Version: 0.1
+Authors@R: person("Gabriel", "Bowen", email = "gabe.bowen@utah.edu",
+                  role = c("aut", "cre"))
+Description: Interface to the public API of the wiDB. Builds, checks 
+    and submits queries, and receives and unpacks servers responses.
+Depends: R (>= 3.1.0)
+Imports: httr, jsonlite
+License: GPL-3
+LazyData: true
