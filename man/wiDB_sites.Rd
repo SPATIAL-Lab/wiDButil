@@ -48,7 +48,7 @@ wiDB_sites = function(minLat = NULL, maxLat = NULL, minLong = NULL, maxLong = NU
     character. Vector of one or more two-letter state or province codes for query.
   }
   \item{types}{
-    character. Vector of one or more sample types for query. See vocabulary in the \href{wiDB tempate}{http://wateriso.utah.edu/waterisotopes/pages/spatial_db/contribute.html}.
+    character. Vector of one or more sample types for query. See vocabulary in the \href{http://wateriso.utah.edu/waterisotopes/pages/spatial_db/contribute.html}{wiDB tempate}.
   }
   \item{projects}{
     character. Vector of one or more project codes for query.
@@ -56,11 +56,11 @@ wiDB_sites = function(minLat = NULL, maxLat = NULL, minLong = NULL, maxLong = NU
 }
 
 \value{
-dataframe. Contains location and summary information for all wiDB sites returned by query. See \href{here}{https://github.com/SPATIAL-Lab/wiDButil/blob/master/Protocol.md} for details.
+dataframe. Contains location and summary information for all wiDB sites returned by query. See \href{https://github.com/SPATIAL-Lab/wiDButil/blob/master/Protocol.md}{here} for details.
 }
 
 \details{
-One or more arguements must be provided.
+One or more arguments must be provided.
 }
 
 \examples{
