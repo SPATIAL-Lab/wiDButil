@@ -2,6 +2,7 @@
 Utilities for querying and obtaining data from the waterisotopes database. Install using devtools:
 
 `library(devtools)`
+
 `install_github("SPATIAL-Lab/wiDButil")`
 
 Find example queries in the function **man** pages.
