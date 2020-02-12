@@ -49,13 +49,13 @@ wiDB_data = function(minLat = NULL, maxLat = NULL, minLong = NULL, maxLong = NUL
     character. Vector of one or more two-letter state or province codes for query.
   }
   \item{types}{
-    character. Vector of one or more sample types for query. See vocabulary in the \link{wiDB tempate}{http://wateriso.utah.edu/waterisotopes/pages/spatial_db/contribute.html}.
+    character. Vector of one or more sample types for query. See vocabulary in the \href{wiDB tempate}{http://wateriso.utah.edu/waterisotopes/pages/spatial_db/contribute.html}.
   }
   \item{projects}{
     character. Vector of one or more project codes for query.
   }
   \item{fields}{
-    character. Vector of one or more data fields to return from database. If omitted, returns all default fields. See \link{here}{https://github.com/SPATIAL-Lab/wiDButil/blob/master/Protocol.md} for details.
+    character. Vector of one or more data fields to return from database. If omitted, returns all default fields. See \href{here}{https://github.com/SPATIAL-Lab/wiDButil/blob/master/Protocol.md} for details.
   }
   \item{scratchDir}{
     character. Directory path to use for unpacking data object. If omitted, working directory is used.
@@ -66,7 +66,7 @@ wiDB_data = function(minLat = NULL, maxLat = NULL, minLong = NULL, maxLong = NUL
 }
 
 \value{
-list. See \link{here}{https://github.com/SPATIAL-Lab/wiDButil/blob/master/Protocol.md} for details.
+list. See \href{here}{https://github.com/SPATIAL-Lab/wiDButil/blob/master/Protocol.md} for details.
 \item{d}{dataframe. Data records for isotope samples returned by query.}
 \item{p}{dataframe. Provenance information associated with samples returned by query.}
 }

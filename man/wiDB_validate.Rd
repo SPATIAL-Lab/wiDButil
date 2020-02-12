@@ -47,7 +47,7 @@ wiDB_validate = function(minLat, maxLat, minLong, maxLong, minElev, maxElev,
     character. Vector of one or more two-letter state or province codes for query.
   }
   \item{types}{
-    character. Vector of one or more sample types for query. See vocabulary in the wiDB tempate at \link{http://wateriso.utah.edu/waterisotopes/pages/spatial_db/contribute.html}.
+    character. Vector of one or more sample types for query. See vocabulary in the \href{wiDB tempate}{http://wateriso.utah.edu/waterisotopes/pages/spatial_db/contribute.html}.
   }
   \item{projects}{
     character. Vector of one or more project codes for query.
