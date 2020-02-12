@@ -41,16 +41,16 @@ wiDB_sites = function(minLat = NULL, maxLat = NULL, minLong = NULL, maxLong = NU
   \item{maxDate}{
     character. Maximum date for query. Format: "YYYY-MM-DD"
   }
-  \item(countries){
+  \item{countries}{
     character. Vector of one or more two-letter country codes for query.
   }
-  \item(states){
+  \item{states}{
     character. Vector of one or more two-letter state or province codes for query.
   }
-  \item(types){
+  \item{types}{
     character. Vector of one or more sample types for query. See vocabulary in the wiDB tempate at \link{http://wateriso.utah.edu/waterisotopes/pages/spatial_db/contribute.html}.
   }
-  \item(projects){
+  \item{projects}{
     character. Vector of one or more project codes for query.
   }
 }

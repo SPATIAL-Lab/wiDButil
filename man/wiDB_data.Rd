@@ -42,33 +42,33 @@ wiDB_data = function(minLat = NULL, maxLat = NULL, minLong = NULL, maxLong = NUL
   \item{maxDate}{
     character. Maximum date for query. Format: "YYYY-MM-DD"
   }
-  \item(countries){
+  \item{countries}{
     character. Vector of one or more two-letter country codes for query.
   }
-  \item(states){
+  \item{states}{
     character. Vector of one or more two-letter state or province codes for query.
   }
-  \item(types){
+  \item{types}{
     character. Vector of one or more sample types for query. See vocabulary in the wiDB tempate at \link{http://wateriso.utah.edu/waterisotopes/pages/spatial_db/contribute.html}.
   }
-  \item(projects){
+  \item{projects}{
     character. Vector of one or more project codes for query.
   }
-  \item(fields){
+  \item{fields}{
     character. Vector of one or more data fields to return from database. If omitted, returns all default fields. See \link{https://github.com/SPATIAL-Lab/wiDButil/blob/master/Protocol.md} for details.
   }
-  \item(scratchDir){
+  \item{scratchDir}{
     character. Directory path to use for unpacking data object. If omitted, working directory is used.
   }
-  \item(clean){
+  \item{clean}{
     logical. Remove working files after data object is unpacked?
   }
 }
 
 \value{
 list. See \link{https://github.com/SPATIAL-Lab/wiDButil/blob/master/Protocol.md} for details.
-\item(d){dataframe. Data records for isotope samples returned by query.}
-\item(p){dataframe. Provenance information associated with samples returned by query.}
+\item{d}{dataframe. Data records for isotope samples returned by query.}
+\item{p}{dataframe. Provenance information associated with samples returned by query.}
 }
 
 \details{
