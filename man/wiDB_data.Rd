@@ -1,0 +1,84 @@
+\name{wiDB_data}
+
+\alias{wiDB_data}
+
+\title{
+Obtain data from wiDB using a query 
+}
+
+\description{
+Obtain data from wiDB using a query 
+}
+
+\usage{
+wiDB_data = function(minLat = NULL, maxLat = NULL, minLong = NULL, maxLong = NULL,
+                     minElev = NULL, maxElev = NULL, minDate = NULL, maxDate = NULL,
+                     countries = NULL, states = NULL, types = NULL, projects = NULL, 
+                     fields = NULL, scratchDir = getwd(), clean = TRUE)
+}
+
+\arguments{
+  \item{minLat}{
+    numeric. Minimum latitude for query region, in decimal degrees. South negative.
+  }
+  \item{maxLat}{
+    numeric. Maximum latitude for query region, in decimal degrees. South negative.
+  }
+  \item{minLong}{
+    numeric. Minimum longitude for query region, in decimal degrees. West negative.
+  }
+  \item{maxLong}{
+    numeric. Maximum longitude for query region, in decimal degrees. West negative.
+  }
+  \item{minElev}{
+    numeric. Minimum elevation for query. Meters.
+  }
+  \item{maxElev}{
+    numeric. Maximum elevation for query. Meters.
+  }
+  \item{minDate}{
+    character. Minimum date for query. Format: "YYYY-MM-DD"
+  }  
+  \item{maxDate}{
+    character. Maximum date for query. Format: "YYYY-MM-DD"
+  }
+  \item(countries){
+    character. Vector of one or more two-letter country codes for query.
+  }
+  \item(states){
+    character. Vector of one or more two-letter state or province codes for query.
+  }
+  \item(types){
+    character. Vector of one or more sample types for query. See vocabulary in the wiDB tempate at \link{http://wateriso.utah.edu/waterisotopes/pages/spatial_db/contribute.html}.
+  }
+  \item(projects){
+    character. Vector of one or more project codes for query.
+  }
+  \item(fields){
+    character. Vector of one or more data fields to return from database. If omitted, returns all default fields. See \link{https://github.com/SPATIAL-Lab/wiDButil/blob/master/Protocol.md} for details.
+  }
+  \item(scratchDir){
+    character. Directory path to use for unpacking data object. If omitted, working directory is used.
+  }
+  \item(clean){
+    logical. Remove working files after data object is unpacked?
+  }
+}
+
+\value{
+list. See \link{https://github.com/SPATIAL-Lab/wiDButil/blob/master/Protocol.md} for details.
+\item(d){dataframe. Data records for isotope samples returned by query.}
+\item(p){dataframe. Provenance information associated with samples returned by query.}
+}
+
+\details{
+One or more arguements must be provided.
+}
+
+\examples{
+#Download data for US precipitation in the 1990s
+vals = wiDB_data(minDate = "1990-01-01", maxDate = "2000-01-01", countries = "US", types = "Precipitation")
+
+#Download data for US Rivers and streams, requesting a subset of data fields
+vals = wiDB_data(minDate = "1980-01-01", maxDate = "2000-01-01", countries = "US", types = "River_or_stream", fields = "Site_Name,Latitude,Longitude,d2H")
+}
