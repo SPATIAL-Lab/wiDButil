@@ -1,4 +1,4 @@
-# wiDB_utilities
+# wiDB Utilities (wiDButil)
 Utilities for querying and obtaining data from the waterisotopes database. Install using devtools:
 
 `library(devtools)`
