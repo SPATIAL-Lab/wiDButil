@@ -1,8 +1,9 @@
 # wiDB_utilities
 Utilities for querying and obtaining data from the waterisotopes database. Install using devtools:
 
-\code{library(devtools)}
-\code{install_github("SPATIAL-Lab/wiDButil")}
+`library(devtools)`
+
+`install_github("SPATIAL-Lab/wiDButil")`
 
 *Protocol.md*  
 Documentation for the wiDB public API
