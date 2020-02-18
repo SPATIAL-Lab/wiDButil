@@ -99,25 +99,25 @@ This api will return a .zip file containing a data file, a project file and desc
 
 The default data file contains the information below.
 
-Site_Name
-Latitude
-Longitude
-Elevation
-Sample_ID
-Type
-Start_Date
-Start_Time_Zone
-Collection_Date
-Collection_Time_Zone
-Phase
-Depth_meters
-Sample_Comments
-d2H
-d18O
-d2H_Analytical_SD
-d18O_Analytical_SD
-WI_Analysis_Source
-Project_ID
+Site_Name    
+Latitude    
+Longitude    
+Elevation    
+Sample_ID    
+Type    
+Start_Date    
+Start_Time_Zone    
+Collection_Date    
+Collection_Time_Zone    
+Phase    
+Depth_meters    
+Sample_Comments    
+d2H    
+d18O    
+d2H_Analytical_SD    
+d18O_Analytical_SD    
+WI_Analysis_Source    
+Project_ID    
 
 NOTE: for embargoed or Proprietary projects, the API will NOT return values for d2H, d18O, d2H_Analytical_SD, or d18O_Analytical_SD. Instead, if a value is available for any of these fields, return "9999", and if no value is available, return "-9999".
 
