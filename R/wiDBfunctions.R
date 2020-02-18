@@ -93,8 +93,13 @@ wiDB_sites = function(minLat = NULL, maxLat = NULL, minLong = NULL, maxLong = NU
   d = GET(q)
   
   if(d$status_code != 200){stop(paste("Request returned error code", d$status_code))}
-  
+
   resp = fromJSON(content(d, as = "text", encoding = "UTF-8"))
+  
+  if(length(resp$sites) == 0){
+    warning("No sites returned")
+    return(NULL)
+  }
   
   return(resp$sites)
 }
@@ -160,7 +165,8 @@ wiDB_data = function(minLat = NULL, maxLat = NULL, minLong = NULL, maxLong = NUL
   
   if(file.size(df) == 0){
     file.remove(c(fn, df, pf))  
-    stop("No records returned")
+    warning("No records returned")
+    return(NULL)
   }
   
   #read in data
