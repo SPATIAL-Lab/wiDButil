@@ -170,4 +170,44 @@ The header file provides a description of the default fields included in the dat
 
 Users can choose a subset of fields to return in the data file by listing field names as arguments. All arguments are comma separated. Default return includes all of the return options. Project_ID is always returned.
 
-------
+------    
+
+## Request field values    
+
+*Usage:*    
+`[GET]...values.php?fields=sth,sth`    
+
+### Default response (JSON)  
+````
+{
+  "countries": [STRING, STRING, ...],   
+  "states" : [STRING, STRING, ...],    
+  "types" : [ STRING, STRING, ...],   
+  "projects": [   
+  {    
+    "Project_ID": STRING,    
+    "Project_Name":  STRING    
+  },     
+  ...     
+  ]     
+}      
+````
+
+### Error response  
+````  
+{     
+  "status": {     
+    "Message" : STRING    
+  }     
+}     
+````   
+
+### fields options  
+
+*Usage:*  
+`...fields=types,countries`    
+
+Catagorical database fields are supported, including:
+
+  countries  states  types  projects
+

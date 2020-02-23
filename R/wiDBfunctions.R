@@ -183,3 +183,31 @@ wiDB_data = function(minLat = NULL, maxLat = NULL, minLong = NULL, maxLong = NUL
   
   return(list(d, p))
 }
+
+#####
+#Get field values
+#####
+wiDB_values = function(fields){
+  if(!is.character(fields)){
+    stop("fields values must be character strings")
+  }
+  for(i in 1:length(fields)){
+    if(!(fields[i] %in% c("countries", "states", "types", "projects"))){
+      stop("One or more fields values not supported")
+    }
+  }
+  
+  baseStr = "http://wateriso.utah.edu/api/v1/values.php?fields="
+  q = baseStr
+  for(i in fields){
+    q = paste0(q, i, ",")
+  }
+  q = substr(q, 1, nchar(q) - 1)
+  d = GET(q)
+  
+  if(d$status_code != 200){stop(paste("Request returned error code", d$status_code))}
+  
+  resp = fromJSON(content(d, as = "text", encoding = "UTF-8"))
+  
+  return(resp)
+}

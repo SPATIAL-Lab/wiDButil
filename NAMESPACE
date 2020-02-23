@@ -1,5 +1,6 @@
 export(wiDB_validate)
 export(wiDB_sites)
 export(wiDB_data)
+export(wiDB_values)
 importFrom(httr,GET)
 importFrom(jsonlite,fromJSON)
