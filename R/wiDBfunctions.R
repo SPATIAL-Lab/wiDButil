@@ -188,6 +188,9 @@ wiDB_data = function(minLat = NULL, maxLat = NULL, minLong = NULL, maxLong = NUL
 #Get field values
 #####
 wiDB_values = function(fields){
+  require(httr)
+  require(jsonlite)
+  
   if(!is.character(fields)){
     stop("fields values must be character strings")
   }
