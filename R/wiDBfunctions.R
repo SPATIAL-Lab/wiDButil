@@ -48,24 +48,36 @@ wiDB_validate = function(minLat, maxLat, minLong, maxLong, minElev, maxElev,
     if(class(countries) != "character"){stop("countries must be string")}
     countries = gsub("  ", "", countries)
     countries = gsub(" ", "", countries)
+    if(length(countries > 1)){
+      countries = paste0(countries, collapse = ",")
+    }
     qStr = paste0(qStr, "&countries=", countries)
   }
   if(!is.null(states)){
     if(class(states) != "character"){stop("states must be string")}
     states = gsub("  ", "", states)
     states = gsub(" ", "", states)
+    if(length(states > 1)){
+      states = paste0(states, collapse = ",")
+    }
     qStr = paste0(qStr, "&states=", states)
   }
   if(!is.null(types)){
     if(class(types) != "character"){stop("types must be string")}
     types = gsub("  ", "", types)
     types = gsub(" ", "", types)
+    if(length(types > 1)){
+      types = paste0(types, collapse = ",")
+    }
     qStr = paste0(qStr, "&types=", types)
   }
   if(!is.null(projects)){
     if(class(projects) != "character"){stop("projects must be string")}
     projects = gsub("  ", "", projects)
     projects = gsub(" ", "", projects)
+    if(length(types > 1)){
+      types = paste0(types, collapse = ",")
+    }
     qStr = paste0(qStr, "&projects=", projects)
   }
   
