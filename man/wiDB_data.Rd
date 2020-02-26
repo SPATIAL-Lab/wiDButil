@@ -69,12 +69,12 @@ wiDB_data = function(minLat = NULL, maxLat = NULL, minLong = NULL, maxLong = NUL
 list. See \href{https://github.com/SPATIAL-Lab/wiDButil/blob/master/Protocol.md}{here} for details.
 \item{d}{dataframe. Data records for isotope samples returned by query.}
 \item{p}{dataframe. Provenance information associated with samples returned by query.}
+Note that some data are embargoed or have been shared under a license that prohibits redistribution. In dataframe \emph{d} values of 9999 indicate that a measurement is available but can't be obtained directly from the wiDB. Projected information in dataframe \emph{p} can be used to contact or visit the primary data source to learn about access to these data. Values of -9999 in \emph{d} indicate no measurement.
 }
 
 \details{
 One or more arguments must be provided. 
 
-Note that some data are embargoed or have been shared under a license that prohibits redistribution. In dataframe *d* values of 9999 indicate that a measurement is available but can't be obtained directly from the wiDB. Projected information in dataframe *p* can be used to contact or visit the primary data source to learn about access to these data. Values of -9999 in *d* indicate no measurement.
 }
 
 \examples{
