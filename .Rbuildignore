@@ -4,3 +4,5 @@
 ^\.travis\.yml$
 ^CRAN-RELEASE$
 ^Protocol.md$
+^.*\.Rproj$
+^\.Rproj\.user$
