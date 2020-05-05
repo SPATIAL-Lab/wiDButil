@@ -209,7 +209,9 @@ wiDB_values = function(fields){
     stop("fields values must be character strings")
   }
   for(i in 1:length(fields)){
-    if(!(fields[i] %in% c("countries", "states", "types", "projects"))){
+    if(!(fields[i] %in% c("countries", "states", "types", "projects", 
+                          "Site_ID", "Sample_ID", "WI_Analysis_ID", 
+                          "Climate_ID"))){
       stop("One or more fields values not supported")
     }
   }

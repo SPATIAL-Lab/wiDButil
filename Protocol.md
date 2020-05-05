@@ -210,5 +210,5 @@ Users can choose a subset of fields to return in the data file by listing field 
 
 Catagorical database fields are supported, including:
 
-  countries  states  types  projects
+  countries  states  types  projects Site_ID Sample_ID WI_Anlysis_ID Climate_ID
 
