@@ -137,10 +137,12 @@ wiDB_data = function(minLat = NULL, maxLat = NULL, minLong = NULL, maxLong = NUL
   
   if(class(clean) != "logical"){stop("clean must be TRUE/FALSE")}
   
-  flist = c("Site_Name", "Latitude", "Longitude", "Elevation", "Sample_ID", "Type",
-            "Start_Date", "Start_Time_Zone", "Collection_Date", "Collection_Time_Zone",
-            "Phase", "Depth_meters", "Sample_Comments", "d2H", "d18O", "d2H_Analytical_SD",
-            "d18O_Analytical_SD", "WI_Analysis_Source", "Project_ID")
+  flist = c("Site_ID", "Site_Name", "Latitude", "Longitude", "Elevation", 
+            "Sample_ID", "Type", "Start_Date", "Start_Time_Zone", 
+            "Collection_Date", "Collection_Time_Zone", "Phase", 
+            "Depth_meters", "Sample_Comments", "d2H", "d18O", 
+            "d2H_Analytical_SD", "d18O_Analytical_SD", "WI_Analysis_Source", 
+            "Project_ID")
   
   if(!is.null(fields)){
     if(class(fields) != "character"){stop("fields must be a string")}
