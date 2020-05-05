@@ -99,7 +99,7 @@ This api will return a .zip file containing a data file, a project file and desc
 
 The default data file contains the information below.
 
-Site_ID
+Site_ID     
 Site_Name    
 Latitude    
 Longitude    
