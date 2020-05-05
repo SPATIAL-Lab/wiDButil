@@ -6,3 +6,4 @@
 ^Protocol.md$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^Rdev$
