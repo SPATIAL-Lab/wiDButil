@@ -195,7 +195,7 @@ wiDB_data = function(minLat = NULL, maxLat = NULL, minLong = NULL, maxLong = NUL
     file.remove(c(df, pf))
   }
   
-  return(list(d, p))
+  return(list("data" = d, "projects" = p))
 }
 
 #####
