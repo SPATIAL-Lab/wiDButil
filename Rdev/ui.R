@@ -74,22 +74,6 @@ ui = fluidPage(
                  
                  uiOutput("watertype"),
                  
-                 # uiOutput('bottle',),
-                 # uiOutput('canal',),
-                 # uiOutput('ground',),
-                 # uiOutput('lake',),
-                 # uiOutput('leaf',),
-                 # uiOutput('mine',),
-                 # uiOutput('ocean',),
-                 # uiOutput('precip',),
-                 # uiOutput('river',),
-                 # uiOutput('snow',),
-                 # uiOutput('soil',),
-                 # uiOutput('spring',),
-                 # uiOutput('stem',),
-                 # uiOutput('sprinkler',),
-                 # uiOutput('tap',),
-                 # uiOutput('vapor',),
                  actionButton('done2', 'Next')
                ),
                mainPanel(
@@ -104,7 +88,7 @@ ui = fluidPage(
                  actionButton('done3', 'Next')
                ),
                mainPanel(
-                 p("If you agree with the recommendation, leave Choice column empty. Otherwise, type in the two-digit code that fits best."),
+                 p("If you agree with the recommendation, do not modify Choice column. Otherwise, type in the two-digit code that fits best."),
                  DT::DTOutput('mod_table'),
                  actionButton('done4', 'Next')
                )
