@@ -3,6 +3,7 @@ library(readxl)
 library(sp)
 library(rgdal)
 library(raster)
+
 server = function(input, output){
   options(stringsAsFactors = FALSE)
   
@@ -66,23 +67,22 @@ server = function(input, output){
     sites <- sitesSheet()
     cty <- readOGR("TM_WORLD_BORDERS-0.3.shp")
     uniquect <- uniquect()
-    if(length(uniquect) > 10) {
+    if(input$startcc == "Site") { #length(uniquect) > 10
       sites.sp <- SpatialPointsDataFrame(data.frame(sites$Longitude, sites$Latitude),
-                                         data = sites, proj4string = crs(cty))
+                                          data = sites, proj4string = crs(cty))
       mcs = over(sites.sp, cty)
-      #Use this to track whether the site has already been resolved, allowing
-      #stop/restart for developers
-      indices <- c()
-      mcs$RES = rep(TRUE)
+      
       for(i in seq_along(sites.sp)){
-        if(is.na(sites.sp$Country[i]) | is.na(mcs$ISO2[i])){
-          mcs$RES[i] = FALSE
+        map.code = mcs$ISO2[i]
+        if(map.code == "MISSING"){
+          mcs$Recommendation = "Delete or type new code"
         }
-        else if(sites.sp$Country[i] != mcs$ISO2[i]){
-          mcs$RES[i] = FALSE
+        #If there is a map code for the location
+        else{
+          mcs$Recommendation = map.code
         }
       }
-      mod <- sites[mcs$RES== FALSE,]
+      mod <- data.frame(Site_ID = sites$Site_ID, Latitude = sites$Latitude, Longitude = sites$Longitude, Original_Country = sites$Country, Recommendation = mcs$Recommendation, Choice = mcs$Recommendation)
     }
     else {
       sites <- sites[!duplicated(sites$Country),]
@@ -100,43 +100,33 @@ server = function(input, output){
           mcs$Recommendation = map.code
         }
       }
-      mod <- data.frame(Original_Country = sites$Country, Recommendation = mcs$Recommendation, Choice = rep(NA))
-    }
-  })
-  
-  observeEvent(nput$mod_table_cell_edit, {
-    d6 <<- DT::editData(d6, input$mod_table_cell_edit, 'mod_table')
-  })
-  
-  modcountries <- eventReactive(input$done4, {
-    #TODO: gsub if cc, delete, or replace with user input
-    if(input$mod_table_cell_edit == '') {
-      
-    }
-    else if (input$mod_table_cell_edit == 'Delete') {
-      
-    }
-    else {
-      
+      mod <- data.frame(Original_Country = sites$Country, Recommendation = mcs$Recommendation, Choice = mcs$Recommendation)
     }
   })
   
   output$mod_table <- DT::renderDataTable({
       mod <- mod()
       DT::datatable(mod, editable = TRUE)
-  }, 'cell')
+  })
   
   proxy = DT::dataTableProxy('mod_table')
   
   observeEvent(input$mod_table_cell_edit, {
-    x = mod()
+    mod = mod()
     info = input$mod_table_cell_edit
     str(info)
+    mod <<- DT::editData(mod, info)
+    sites <- sitesSheet()
     i = info$row
-    j = info$col
-    v = info$value
-    x[i, j] <<- DT::coerceValue(v, x[i, j])
-    DT::replaceData(proxy, x, resetPaging = FALSE)  # important
+    ncc = info$value
+    if (input$startcc == "Country") {
+      cc <- mod[i, which ( colnames(mod) == "Original_Country")]
+      sites$Country[sites$Country == cc] <- ncc
+    }
+    else {
+      sites$Country[i] <- ncc
+      sites <- sites
+    }
   })
   
   finishedSheets <- reactive({
@@ -216,7 +206,7 @@ server = function(input, output){
     for(i in 1:length(dataframe)){
       if(dataframe[i,which(colnames(dataframe) == id)] >= 90 || 
          dataframe[i,which(colnames(dataframe) == id)] <= -90){
-        return (FALSE);
+        return (FALSE); 
       }
     }
     return (TRUE);
@@ -226,7 +216,7 @@ server = function(input, output){
   checkLong = function(dataframe, id){
     for(i in 1:length(dataframe)){
       if((dataframe[i,which(colnames(dataframe) == id)] >= 180) || 
-         (dataframe[i,which(colnames(dataframe) == id)] <= 0)){
+         (dataframe[i,which(colnames(dataframe) == id)] <= -180)){
         return (FALSE);
       }
     }
@@ -243,46 +233,64 @@ server = function(input, output){
     return(L);
   }
   
+  #function that checks if data uses n/s/e/w convention
+  nsewMatch = function(dataframe, id) {
+    L <- unlist(dataframe[!is.numeric(dataframe), which(colnames(dataframe) == id)])
+    L <- na.omit(L) 
+    
+    # Matches strings that use N,S,E,W instead of + or -
+    nsewRegex <- "[nNsSeEwW]"
+    #^[nNsSeEwW]\\D+.?\\D*|^\\D+.?\\D*[nNsSeEwW]"
+    return (grep(nsewRegex, L,))
+  }
+  
+  #function that checks if data uses degrees/min/sec instead of decimal degrees
+  dmsMatch = function(dataframe, id) {
+    L <- unlist(dataframe[!is.numeric(dataframe), which(colnames(dataframe) == id)])
+    L <- na.omit(L) 
+    
+    # Matches strings that use degrees min sec instead of dd
+    dmsRegex <- "([+-])?([0-8]?[0-9]|90)\u00B0\\s*([0-5]?[0-9])'\\s*([0-5]?[0-9].?[0-9]*\")"
+    return (grep(dmsRegex, L,))
+  }
+  
+  
   #site sheet
   observeEvent(input$done, {
-    df <- data() 
+    df <- data()
     
     #checks if lat/long are numeric
     LAT <- checkNumeric(df, input$lat)
     LONG <- checkNumeric(df, input$long)
-    
-    if(is.na(LAT) == FALSE || is.na(LONG) == FALSE){
-      if(checkLat(df, input$lat) == FALSE ){
-        shinyalert::shinyalert(title = "Error", 
-                               "Some values in your latitude column are outside range [-90,90].", type = "error",)
-      }
-      else if(checkLong(df, input$long) == FALSE){
-        shinyalert::shinyalert(title = "Error", 
-                               "Some values in your longitude column are outside range [0,180].", type = "error",)
-      }
-      else{
+    tryCatch(
+      expr = {
         showModal(modalDialog(
           title = "Warning", 
           "Any rows without longitude or latitude values will be deleted.", 
           footer = actionButton("dismiss", label = "OK")
         ))
+      },
+      error = function(e){ 
+        # Do this if an error is caught...
+        shinyalert::shinyalert(title = "Error", 
+                               "The column you selected for latitude/longitude has values that are not numeric.", 
+                               type = "error", inputId = "nonnum", showConfirmButton = TRUE)
+      },
+      warning = function(w){
+        # Do this if an warning is caught...
+        shinyalert::shinyalert(title = "Warning", 
+                               paste0(w), 
+                               type = "warning", inputId = "w", showConfirmButton = TRUE)
       }
-    } 
-    else{
-      shinyalert::shinyalert(title = "Error", 
-                             "The column you selected for latitude/longitude is not numeric.", 
-                             type = "error", )
-    }
+    )
     
   })
   
-  
   sitesSheet <- eventReactive(input$dismiss, {
-    removeModal()
+    removeModal()    
     if(!is.null(input$file)){
       df <- data()
       SID <- siteid()
-      
       
       
       #matches user input to column in inputted dataframe
@@ -296,6 +304,88 @@ server = function(input, output){
       COUNTRY <- df[, which(colnames(df) == input$cc)]
       COMMENT <- df[, which(colnames(df) == input$sc)]
       
+      #alerts user that any rows without lat/long values will be deleted.
+      warning("Any rows without longitude or latitude values will be deleted.")
+      
+      #checks if lat/long are formatted with N/S/E/W instead of (+) and (-)
+      nsewMatchLAT <- nsewMatch(df, input$lat)
+      nsewMatchLONG <- nsewMatch(df, input$long)
+      
+      if (length(nsewMatchLAT) > 0 || length(nsewMatchLONG) > 0) {
+        
+        warning("Your data is formatted using N/S/E/W instead of +/-. Any rows with this formatting will be changed to +/- formatting")
+        
+        if(length(nsewMatchLAT) > 0) {
+          for (i in 1:length(nsewMatchLAT)) {
+            lat <- df[nsewMatchLAT[i], which(colnames(df) == input$lat)]
+            nd <- stringr::str_detect(lat, "[nN]",)
+            sd <- stringr::str_detect(lat, "[sS]",)
+            if (!is.na(nd) && nd == TRUE) {
+              df[nsewMatchLAT[i], which(colnames(df) == input$lat)] <- paste0('+', gsub("[nN]", "", lat))
+            }
+            if (!is.na(sd) && sd == TRUE) {
+              df[nsewMatchLAT[i], which(colnames(df) == input$lat)] <- paste0('-', gsub("[sS]", "", lat))
+            }
+          }
+        }
+        if (length(nsewMatchLONG) > 0) {
+          for (j in 1:length(nsewMatchLONG)) {
+            long <- df[nsewMatchLONG[j], which(colnames(df) == input$long)]
+            ed <- stringr::str_detect(long, "[eE]",)
+            wd <- stringr::str_detect(long, "[wW]",)
+            if (!is.na(ed) && ed == TRUE) {
+              df[nsewMatchLONG[j], which(colnames(df) == input$long)] <- paste0('+', gsub("[eE]", "", long))
+            }
+            if (!is.na(wd) && wd == TRUE) {
+              df[nsewMatchLONG[j], which(colnames(df) == input$long)] <- paste0('-', gsub("[wW]", "",long))
+            }
+          }
+        }
+      }
+      
+      #checks if lat/long are formatted as degrees/min/sec instead of decimal degrees
+      dmsMatchLAT <- dmsMatch(df, input$lat)
+      dmsMatchLONG <- dmsMatch(df, input$long)
+      
+      if (length(dmsMatchLAT) > 0 || length(dmsMatchLONG) > 0) {
+        
+        warning("Your data is formatted using DMS formatting instead of DD. Any rows with this formatting will be changed to DD.")
+      
+        lat <- df[, which(colnames(df) == input$lat)]
+        long <- df[, which(colnames(df) == input$long)]
+        
+        for (i in 1:nrow(lat)) {
+          #in order to parse into dd, must remove delimiters and make sure there are no extra spaces
+          l <- gsub("[\u00B0,',\"]", "", lat[i,])
+          lo <- gsub("[\u00B0,',\"]", "", long[i,])
+          l <- gsub("\\s+"," ", l)
+          lo <- gsub("\\s+"," ", lo)
+          
+          
+          df[i, which(colnames(df) == input$lat)] <- measurements::conv_unit(l, from = 'deg_min_sec', to = 'dec_deg')
+          df[i, which(colnames(df) == input$long)] <- measurements::conv_unit(lo, from = 'deg_min_sec', to = 'dec_deg')
+        }
+      }
+      
+      #checks if lat/long are numeric
+      LAT <- checkNumeric(df, input$lat)
+      LONG <- checkNumeric(df, input$long)
+      
+      #if lat/long vectors still contain non-numeric values at this point, then we throw an error
+      if (is.na(LAT) == TRUE || is.na(LONG) == TRUE) {
+        stop("The column you selected for latitude/longitude has values that are not numeric. Please edit your file and retry.")
+      }
+      
+      #checks if lat/long values are within ranges. currently only throws an error.
+      lat <- df[, which(colnames(df) == input$lat)]
+      long <- df[, which(colnames(df) == input$long)]
+      
+      latOver90 <- which(lat > 90 || lat < -90)
+      longOver180 <- which(long > 180 || long < -180)
+      
+      if (length(latOver90) > 0 || length(longOver180) > 0) {
+        stop("You have latitudes/longitudes outside of expected range ([-90,90] and [-180,180])")
+      }
       
       if(input$sn == "N/A"){
         SITENAME <- rep(NA)
@@ -322,7 +412,7 @@ server = function(input, output){
       #creates sites sheet
       siteHeader <- c("Site_ID", "Site_Name", "Latitude", "Longitude", "Elevation_mabsl", 
                       "Address", "City", "State_or_Province", "Country", "Site_Comments")
-      dff <- data.frame(SID, SITENAME, LAT, longitude(), ELEV,
+      dff <- data.frame(SID, SITENAME, LAT, LONG, ELEV,
                         ADDY, CITY,  STATE, COUNTRY,  COMMENT)
       names(dff) <- siteHeader
       
@@ -781,11 +871,6 @@ server = function(input, output){
   output$startCC <- renderUI({
     ct<- ct()
     uniquect <- uniquect()
-    if(length(uniquect) > 10) {
-      selectInput('startcc', paste(ct, "countries to review. Continue? "), choices = c('Yes', 'No'))
-    }
-    else {
-      selectInput('startcc', paste(length(uniquect), "sites to review. Continue? "), choices = c('Yes', 'No'))
-    }
+    selectInput('startcc', paste(ct, "sites to review from ", length(uniquect), " countries. Review by country or site? "), choices = c('Country', 'Site'))
   })
 }
